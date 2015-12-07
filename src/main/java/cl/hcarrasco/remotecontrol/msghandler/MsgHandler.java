@@ -6,6 +6,8 @@ import java.io.IOException;
 
 public class MsgHandler {
 	
+	public static String messageShowing = "voice";
+	
 	public boolean msgFilter(String msgFromDevice){
 		
 		String strValidator;
@@ -32,19 +34,20 @@ public class MsgHandler {
 		
 		try{
 			if("msg".equals(typeCommand)){
-				strCommand    = command[1];
-				if (strCommand!=null){
-					String[] cmd = {"osascript", "-e","say \""+strCommand.trim()+"\" "}; //using \"victoria\"
-					Runtime.getRuntime().exec(cmd);
-				}
-			}
-			if("msg-view".equals(typeCommand)){
-				strCommand    = command[1];
-				if (strCommand!=null){
-					String title = "New Message";
-					String subtitle = "";
-					String[] cmd = {"osascript", "-e", "display notification \""+strCommand.trim()+"\" with title \""+title.trim()+"\" subtitle \""+subtitle.trim()+"\" sound name \"Glass\""};
-					Runtime.getRuntime().exec(cmd);
+				if(messageShowing.equals("voice")){
+					strCommand    = command[1];
+					if (strCommand!=null){
+						String[] cmd = {"osascript", "-e","say \""+strCommand.trim()+"\" "}; //using \"victoria\"
+						Runtime.getRuntime().exec(cmd);
+					}
+				} else if (messageShowing.equals("text-notification")) {
+					strCommand    = command[1];
+					if (strCommand!=null){
+						String title = "New Message";
+						String subtitle = "";
+						String[] cmd = {"osascript", "-e", "display notification \""+strCommand.trim()+"\" with title \""+title.trim()+"\" subtitle \""+subtitle.trim()+"\" sound name \"Glass\""};
+						Runtime.getRuntime().exec(cmd);
+					}
 				}
 			}
 			if("volUp".equals(typeCommand)){

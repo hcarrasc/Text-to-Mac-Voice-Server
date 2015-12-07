@@ -30,7 +30,7 @@ import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 
 public class Start {
 
-    private static int port = 1234;
+    public static int port = 1234;
 
     public void run() throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup(); 
