@@ -1,21 +1,5 @@
 package cl.hcarrasco.remotecontrol.server;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-
-import cl.hcarrasco.remotecontrol.gui.GuiManager;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -27,6 +11,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import cl.hcarrasco.remotecontrol.gui.GuiManager;
 
 public class Start {
 
@@ -42,7 +27,6 @@ public class Start {
              .childHandler(new ChannelInitializer<SocketChannel>() { 
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
-                	 
                 	 byte[] HEX = {Byte.valueOf(String.valueOf(Integer.parseInt("3C", 16)))};
                 	 ByteBuf delimiter = Unpooled.copiedBuffer(HEX);
                      ch.pipeline().addLast(new DelimiterBasedFrameDecoder(65*1024, delimiter));
@@ -52,29 +36,21 @@ public class Start {
              .option(ChannelOption.SO_BACKLOG, 128) 
              .childOption(ChannelOption.SO_KEEPALIVE, true); 
 
-            // Bind and start to accept incoming connections.
-            ChannelFuture f = b.bind(port).sync(); 
+             // Bind and start to accept incoming connections.
+             ChannelFuture f = b.bind(port).sync(); 
 
-            f.channel().closeFuture().sync();
+             f.channel().closeFuture().sync();
         } finally {
-            workerGroup.shutdownGracefully();
-            bossGroup.shutdownGracefully();
+             workerGroup.shutdownGracefully();
+             bossGroup.shutdownGracefully();
         }
     }
-    
 
     public static void main(String[] args) throws Exception {
-    	
-    	try {
-    	    UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
-    	 } catch (Exception e) {
-    	            e.printStackTrace();
-    	 }
     
     	GuiManager guiManager = new GuiManager();
-    	guiManager.createComponents();
-    	guiManager.startGUI();
-        
+		(new Thread(guiManager)).start();
+
         if (args.length > 0) {
             port = Integer.parseInt(args[0]);
         } else {

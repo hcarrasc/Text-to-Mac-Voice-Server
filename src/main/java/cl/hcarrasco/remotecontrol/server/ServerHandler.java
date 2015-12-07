@@ -7,9 +7,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 import io.netty.util.ReferenceCountUtil;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import cl.hcarrasco.remotecontrol.msghandler.MsgHandler;
 
 /**
  * Esta clase sera el manejador de los eventos que ocurran en el servidor
@@ -17,8 +17,7 @@ import java.util.logging.Logger;
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
 	/**
-     * Protocol:
-     * >hc;msg=text<
+     * Protocol: >hc;msg=text<
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
@@ -46,7 +45,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         
         if (isFromAndroidApp){
         	msgHandler.processMsg(msgFromDevice);
-        	//System.out.println("Respondiendo... a cliente "+ctx.channel().remoteAddress());
         	ChannelFuture ft = ctx.channel().writeAndFlush(Unpooled.copiedBuffer(">hc;OK<", CharsetUtil.UTF_8));
         	System.out.println(ft.cause());
         } else {
