@@ -11,19 +11,17 @@ import io.netty.util.ReferenceCountUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import cl.hcarrasco.remotecontrol.msghandler.MsgHandler;
-
 /**
  * Esta clase sera el manejador de los eventos que ocurran en el servidor
  */
-public class ServerHandler extends ChannelInboundHandlerAdapter { // (1)
+public class ServerHandler extends ChannelInboundHandlerAdapter {
 
 	/**
      * Protocol:
      * >hc;msg=text<
      */
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) { // (2)
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
         
     	boolean isFromAndroidApp = false;
         int maxBufferMessage = 250;
@@ -57,7 +55,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter { // (1)
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) { // (4)
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         // Close the connection when an exception is raised.
         cause.printStackTrace();
         ctx.close();

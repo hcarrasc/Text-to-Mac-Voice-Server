@@ -1,5 +1,21 @@
 package cl.hcarrasco.remotecontrol.server;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
+import cl.hcarrasco.remotecontrol.gui.GuiManager;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -45,9 +61,20 @@ public class Start {
             bossGroup.shutdownGracefully();
         }
     }
+    
 
     public static void main(String[] args) throws Exception {
+    	
+    	try {
+    	    UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+    	 } catch (Exception e) {
+    	            e.printStackTrace();
+    	 }
     
+    	GuiManager guiManager = new GuiManager();
+    	guiManager.createComponents();
+    	guiManager.startGUI();
+        
         if (args.length > 0) {
             port = Integer.parseInt(args[0]);
         } else {

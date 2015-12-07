@@ -38,6 +38,15 @@ public class MsgHandler {
 					Runtime.getRuntime().exec(cmd);
 				}
 			}
+			if("msg-view".equals(typeCommand)){
+				strCommand    = command[1];
+				if (strCommand!=null){
+					String title = "New Message";
+					String subtitle = "";
+					String[] cmd = {"osascript", "-e", "display notification \""+strCommand.trim()+"\" with title \""+title.trim()+"\" subtitle \""+subtitle.trim()+"\" sound name \"Glass\""};
+					Runtime.getRuntime().exec(cmd);
+				}
+			}
 			if("volUp".equals(typeCommand)){
 				String[] cmd = {"osascript", "-e","set volume "};
 				Runtime.getRuntime().exec(cmd);
