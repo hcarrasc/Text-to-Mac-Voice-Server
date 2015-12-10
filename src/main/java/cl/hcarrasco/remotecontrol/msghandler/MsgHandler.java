@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class MsgHandler {
 	
-	public static String messageShowing = "voice";
+	public static String messageShowing = "text-notification";
 	
 	public boolean msgFilter(String msgFromDevice){
 		
@@ -21,15 +21,26 @@ public class MsgHandler {
 		}
 	}
 	
+	/**
+	 * Handle message with protocol: >hc;msg=caca;sender=Héctor Carrasco<
+	 * @param msgFromDevice
+	 */
 	public void processMsg(String msgFromDevice){
 		
 		String[] command;
 		String strCommand;
+		String strSender;
 		String typeCommand;
+		String sender;
+		
 		msgFromDevice = msgFromDevice.replaceAll(">", "");
 		msgFromDevice = msgFromDevice.replaceAll("<", "");
+		
 		strCommand    = msgFromDevice.split(";")[1];
+		strSender     = msgFromDevice.split(";")[2];
+		
 		command       = strCommand.split("=");
+		sender        = strSender.split("=")[1];
 		typeCommand   = command[0];
 		
 		try{
@@ -43,7 +54,7 @@ public class MsgHandler {
 				} else if (messageShowing.equals("text-notification")) {
 					strCommand    = command[1];
 					if (strCommand!=null){
-						String title = "New Message";
+						String title = "Message from "+sender;
 						String subtitle = "";
 						String[] cmd = {"osascript", "-e", "display notification \""+strCommand.trim()+"\" with title \""+title.trim()+"\" subtitle \""+subtitle.trim()+"\" sound name \"Glass\""};
 						Runtime.getRuntime().exec(cmd);

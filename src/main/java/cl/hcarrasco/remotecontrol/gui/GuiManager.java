@@ -96,5 +96,4 @@ public class GuiManager implements Runnable{
 		createComponents();
 		startGUI();
 	}
-    
 }

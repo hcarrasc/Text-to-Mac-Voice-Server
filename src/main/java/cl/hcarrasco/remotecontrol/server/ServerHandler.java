@@ -16,9 +16,6 @@ import cl.hcarrasco.remotecontrol.msghandler.MsgHandler;
  */
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
-	/**
-     * Protocol: >hc;msg=text<
-     */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         
