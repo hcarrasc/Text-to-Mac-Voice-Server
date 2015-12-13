@@ -60,7 +60,7 @@ public class GuiManager implements Runnable{
 	    frame.add (deviceLabelResult);
 	    
 	    // In order as appears in form
-	    initOrStopLabel.setBounds(80, 25, 90, 25);    initOrStopButton.setBounds(248, 28, 120, 25);
+	    initOrStopLabel.setBounds(80, 25, 95, 30);    initOrStopButton.setBounds(248, 28, 120, 25);
 	    serverStatusLabel.setBounds (80, 70, 90, 25); statusLabelResult.setBounds (253, 70, 100, 25);
 	    portLabel.setBounds (80, 110, 105, 30);        portTxtField.setBounds (250, 115, 187, 25);
 	    displayLabel.setBounds (80, 160, 130, 25);    typeMessageSelector.setBounds (250, 160, 190, 25);
