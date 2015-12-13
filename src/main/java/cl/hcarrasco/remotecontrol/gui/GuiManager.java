@@ -18,50 +18,48 @@ public class GuiManager implements Runnable{
     JFrame frame = new JFrame("Remote Control Android");
 	JPanel panel = new JPanel();
 	private JButton okButton;
-	private JLabel jcomp2;
-	private JLabel jcomp3;
+	private JLabel serverStatusLabel;
+	private JLabel portLabel;
 	private JTextField portTxtField;
-	private JLabel jcomp5;
+	private JLabel displayLabel;
 	private JComboBox<?> typeMessageSelector;
-	private JLabel jcomp7;
-	private JLabel jcomp8;
-	private JLabel jcomp9;
+	private JLabel statusLabelResult;
+	private JLabel deviceLabel;
+	private JLabel deviceLabelResult;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void createComponents() {
 		
 	    String[] jcomp6Items = {"System Voice", "System Notification"};
-	    jcomp2 = new JLabel ("Server Status:");
-	    jcomp3 = new JLabel ("Custom Port:");
+	    serverStatusLabel = new JLabel ("Server Status:");
+	    portLabel = new JLabel ("Custom Port:");
 	    portTxtField = new JTextField("");
-	    jcomp5 = new JLabel ("Display Message as:");
+	    displayLabel = new JLabel ("Display Message as:");
 	    typeMessageSelector = new JComboBox (jcomp6Items);
-	    jcomp7 = new JLabel ("status");
-	    jcomp8 = new JLabel ("Device Connected:");
-	    jcomp9 = new JLabel ("device");
+	    statusLabelResult = new JLabel ("status");
+	    deviceLabel = new JLabel ("Device Connected:");
+	    deviceLabelResult = new JLabel ("device");
 	    okButton = new JButton ("Save Preferences");
 	    
-	    frame.setPreferredSize (new Dimension (289, 297));
+	    frame.setPreferredSize (new Dimension (500, 327));
 	    frame.setLayout (null);
 	    frame.add (okButton);
-	    frame.add (jcomp2);
-	    frame.add (jcomp3);
+	    frame.add (serverStatusLabel);
+	    frame.add (portLabel);
 	    frame.add (portTxtField);
-	    frame.add (jcomp5);
+	    frame.add (displayLabel);
 	    frame.add (typeMessageSelector);
-	    frame.add (jcomp7);
-	    frame.add (jcomp8);
-	    frame.add (jcomp9);
+	    frame.add (statusLabelResult);
+	    frame.add (deviceLabel);
+	    frame.add (deviceLabelResult);
 	    
-	    okButton.setBounds (75, 225, 145, 30);
-	    jcomp2.setBounds (20, 20, 90, 25);
-	    jcomp3.setBounds (20, 60, 95, 30);
-	    portTxtField.setBounds (150, 65, 120, 25);
-	    jcomp5.setBounds (20, 110, 130, 25);
-	    typeMessageSelector.setBounds (150, 110, 120, 25);
-	    jcomp7.setBounds (150, 20, 100, 25);
-	    jcomp8.setBounds (20, 155, 120, 25);
-	    jcomp9.setBounds (150, 155, 120, 25);
+	    // In order as appears in form
+	    serverStatusLabel.setBounds (80, 60, 90, 25); statusLabelResult.setBounds (253, 60, 100, 25);
+	    portLabel.setBounds (80, 100, 95, 30);         portTxtField.setBounds (250, 105, 187, 25);
+	    displayLabel.setBounds (80, 150, 130, 25);    typeMessageSelector.setBounds (250, 150, 190, 25);
+	    deviceLabel.setBounds (80, 195, 120, 25);     deviceLabelResult.setBounds (255, 195, 120, 25);
+
+	    okButton.setBounds (180, 245, 145, 30); //x,y,w,h
 	    
 	    okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent action) {
@@ -78,7 +76,7 @@ public class GuiManager implements Runnable{
 	    });
 	}
 	
-	public void startGUI (){
+	public void startGUI() {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
         int x = (int) ((dimension.getWidth() - 320));
