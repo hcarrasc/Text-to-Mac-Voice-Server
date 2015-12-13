@@ -6,8 +6,13 @@ public class Start {
 
     public static void main(String[] args) throws Exception {
     
-    	GuiManager guiManager = new GuiManager();
+    	String OS = System.getProperty("os.name").toLowerCase();
+    	if(OS.contains("mac")){
+    		GuiManager guiManager = new GuiManager();
 		(new Thread(guiManager)).start();
-
+    	} else {
+    		System.exit(0);
+    	}
+    	
     }
 }
