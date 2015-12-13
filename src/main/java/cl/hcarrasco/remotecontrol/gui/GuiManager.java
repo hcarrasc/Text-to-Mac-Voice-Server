@@ -4,16 +4,20 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import cl.hcarrasco.remotecontrol.msghandler.MsgHandler;
-import cl.hcarrasco.remotecontrol.server.Start;
+import cl.hcarrasco.remotecontrol.server.ServerSetup;
 
 public class GuiManager implements Runnable{
+	
+	ServerSetup server;
 	
     JFrame frame = new JFrame("Remote Control Android");
 	JPanel panel = new JPanel();
@@ -69,15 +73,36 @@ public class GuiManager implements Runnable{
 	    okButton.setBounds (180, 250, 145, 30); //x,y,w,h
 	    
 	    okButton.addActionListener(new ActionListener() {
+	    	
 			public void actionPerformed(ActionEvent action) {
 				if (!"".equals(portTxtField.getText()) && portTxtField.getText()!=null){
 					System.out.println(portTxtField.getText());
-					Start.port = Integer.parseInt(portTxtField.getText());
+					server.setPort(Integer.parseInt(portTxtField.getText()));
 				}
 				if (typeMessageSelector.getSelectedIndex()==0){
 					MsgHandler.messageShowing = "voice";
 				} else if (typeMessageSelector.getSelectedIndex()==1) {
 					MsgHandler.messageShowing = "text-notification";
+				}
+			}
+	    });
+	    initOrStopButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent action) {
+				if(server!=null){
+					initOrStopButton.setText("Start Server");
+					server.setServerStatusFlag("off");
+					server.killServer();
+					server = null;
+				}else {
+					server = new ServerSetup();
+					initOrStopButton.setText("Stop Server");
+					server.setServerStatusFlag("on");
+					try {
+						(new Thread(server)).start();
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
 	    });
