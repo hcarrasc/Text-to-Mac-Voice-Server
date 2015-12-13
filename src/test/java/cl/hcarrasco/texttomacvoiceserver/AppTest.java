@@ -1,4 +1,4 @@
-package cl.hcarrasco.remotecontrol;
+package cl.hcarrasco.texttomacvoiceserver;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

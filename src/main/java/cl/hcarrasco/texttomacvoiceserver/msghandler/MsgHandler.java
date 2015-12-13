@@ -4,9 +4,12 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.io.IOException;
 
+import cl.hcarrasco.texttomacvoiceserver.gui.GuiManager;
+
 public class MsgHandler {
 	
-	public static String messageShowing = "text-notification";
+	public static String messageShowing = "voice";
+	public static String clientConnected = "Nobody connected";
 	
 	public boolean msgFilter(String msgFromDevice){
 		
@@ -16,7 +19,7 @@ public class MsgHandler {
 		if("hc".equals(strValidator)) {
 			return true;
 		}
-		else{
+		else {
 			return false;
 		}
 	}
@@ -54,6 +57,9 @@ public class MsgHandler {
 				} else if (messageShowing.equals("text-notification")) {
 					strCommand    = command[1];
 					if (strCommand!=null){
+						clientConnected = sender;
+						GuiManager.deviceLabelResult.setText("");
+						GuiManager.deviceLabelResult.setText(clientConnected);
 						String title = "Message from "+sender;
 						String subtitle = "";
 						String[] cmd = {"osascript", "-e", "display notification \""+strCommand.trim()+"\" with title \""+title.trim()+"\" subtitle \""+subtitle.trim()+"\" sound name \"Glass\""};

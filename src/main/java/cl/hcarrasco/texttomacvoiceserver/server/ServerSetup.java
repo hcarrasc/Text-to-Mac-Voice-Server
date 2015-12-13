@@ -23,6 +23,7 @@ public class ServerSetup implements Runnable{
     @Override
 	public void run() {
 		try {
+			System.out.println("Starting server at "+port);
             ServerBootstrap b = new ServerBootstrap(); 
             b.group(bossGroup, workerGroup)
              .channel(NioServerSocketChannel.class) 

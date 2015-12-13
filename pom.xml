@@ -4,11 +4,11 @@
 
   <groupId>RemoteControl</groupId>
   <artifactId>RemoteControl</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>RemoteControl</name>
-  <url>http://maven.apache.org</url>
+  <name>Text to Voice Mac</name>
+  <url>http://hcarrasco.cl/text-to-mac-voice</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,4 +32,8 @@
 	        <version>4.0.33.Final</version>
         </dependency>
     </dependencies>
+    <organization>
+    	<name>hcarrasco</name>
+    	<url>hcarrasco.cl</url>
+    </organization>
 </project>
