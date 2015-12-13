@@ -1,4 +1,4 @@
-package cl.hcarrasco.remotecontrol.server;
+package cl.hcarrasco.texttomacvoiceserver.server;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -7,9 +7,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 import io.netty.util.ReferenceCountUtil;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import cl.hcarrasco.remotecontrol.msghandler.MsgHandler;
+
+import cl.hcarrasco.texttomacvoiceserver.msghandler.MsgHandler;
 
 /**
  * Esta clase sera el manejador de los eventos que ocurran en el servidor

@@ -1,4 +1,4 @@
-package cl.hcarrasco.remotecontrol.server;
+package cl.hcarrasco.texttomacvoiceserver.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;

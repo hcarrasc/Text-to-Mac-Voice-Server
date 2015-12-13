@@ -1,6 +1,6 @@
-package cl.hcarrasco.remotecontrol.server;
+package cl.hcarrasco.texttomacvoiceserver.server;
 
-import cl.hcarrasco.remotecontrol.gui.GuiManager;
+import cl.hcarrasco.texttomacvoiceserver.gui.GuiManager;
 
 public class Start {
 

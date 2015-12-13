@@ -1,4 +1,4 @@
-package cl.hcarrasco.remotecontrol.msghandler;
+package cl.hcarrasco.texttomacvoiceserver.msghandler;
 
 import java.awt.AWTException;
 import java.awt.Robot;
