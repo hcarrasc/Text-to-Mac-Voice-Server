@@ -51,6 +51,9 @@ public class MsgHandler {
 				if(messageShowing.equals("voice")){
 					strCommand    = command[1];
 					if (strCommand!=null){
+						clientConnected = sender;
+						GuiManager.deviceLabelResult.setText("");
+						GuiManager.deviceLabelResult.setText(clientConnected);
 						String[] cmd = {"osascript", "-e","say \""+strCommand.trim()+"\" "}; //using \"victoria\"
 						Runtime.getRuntime().exec(cmd);
 					}

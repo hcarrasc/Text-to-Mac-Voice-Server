@@ -20,7 +20,7 @@ public class GuiManager implements Runnable{
 	
 	ServerSetup server;
 	
-    JFrame frame = new JFrame("Remote Control Android");
+    JFrame frame = new JFrame("Text -> Mac Voice Server");
 	JPanel panel = new JPanel();
 	private JButton initOrStopButton;
 	private JLabel serverStatusLabel;
