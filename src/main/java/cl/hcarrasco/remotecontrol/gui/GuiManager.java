@@ -34,7 +34,7 @@ public class GuiManager implements Runnable{
 		
 	    String[] jcomp6Items = {"System Voice", "System Notification"};
 	    serverStatusLabel = new JLabel ("Server Status:");
-	    initOrStopLabel = new JLabel ("Control Server");
+	    initOrStopLabel = new JLabel ("Control Server:");
 	    portLabel = new JLabel ("Custom Port:");
 	    portTxtField = new JTextField("");
 	    displayLabel = new JLabel ("Display Message as:");
@@ -45,7 +45,7 @@ public class GuiManager implements Runnable{
 	    okButton = new JButton ("Save Preferences");
 	    initOrStopButton = new JButton ("Start Server");
 	    
-	    frame.setPreferredSize (new Dimension (500, 327));
+	    frame.setPreferredSize (new Dimension (500, 335));
 	    frame.setLayout (null);
 	    frame.add (okButton);
 	    frame.add (initOrStopButton);
@@ -60,13 +60,13 @@ public class GuiManager implements Runnable{
 	    frame.add (deviceLabelResult);
 	    
 	    // In order as appears in form
-	    initOrStopLabel.setBounds(80, 15, 90, 25);    initOrStopButton.setBounds(248, 18, 120, 25);
-	    serverStatusLabel.setBounds (80, 60, 90, 25); statusLabelResult.setBounds (253, 60, 100, 25);
-	    portLabel.setBounds (80, 100, 95, 30);        portTxtField.setBounds (250, 105, 187, 25);
-	    displayLabel.setBounds (80, 150, 130, 25);    typeMessageSelector.setBounds (250, 150, 190, 25);
-	    deviceLabel.setBounds (80, 195, 120, 25);     deviceLabelResult.setBounds (255, 195, 120, 25);
+	    initOrStopLabel.setBounds(80, 25, 90, 25);    initOrStopButton.setBounds(248, 28, 120, 25);
+	    serverStatusLabel.setBounds (80, 70, 90, 25); statusLabelResult.setBounds (253, 70, 100, 25);
+	    portLabel.setBounds (80, 110, 105, 30);        portTxtField.setBounds (250, 115, 187, 25);
+	    displayLabel.setBounds (80, 160, 130, 25);    typeMessageSelector.setBounds (250, 160, 190, 25);
+	    deviceLabel.setBounds (80, 205, 120, 25);     deviceLabelResult.setBounds (255, 205, 120, 25);
 
-	    okButton.setBounds (180, 245, 145, 30); //x,y,w,h
+	    okButton.setBounds (180, 250, 145, 30); //x,y,w,h
 	    
 	    okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent action) {
