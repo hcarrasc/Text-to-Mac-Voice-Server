@@ -18,7 +18,9 @@ public class GuiManager implements Runnable{
     JFrame frame = new JFrame("Remote Control Android");
 	JPanel panel = new JPanel();
 	private JButton okButton;
+	private JButton initOrStopButton;
 	private JLabel serverStatusLabel;
+	private JLabel initOrStopLabel;
 	private JLabel portLabel;
 	private JTextField portTxtField;
 	private JLabel displayLabel;
@@ -32,6 +34,7 @@ public class GuiManager implements Runnable{
 		
 	    String[] jcomp6Items = {"System Voice", "System Notification"};
 	    serverStatusLabel = new JLabel ("Server Status:");
+	    initOrStopLabel = new JLabel ("Control Server");
 	    portLabel = new JLabel ("Custom Port:");
 	    portTxtField = new JTextField("");
 	    displayLabel = new JLabel ("Display Message as:");
@@ -40,11 +43,14 @@ public class GuiManager implements Runnable{
 	    deviceLabel = new JLabel ("Device Connected:");
 	    deviceLabelResult = new JLabel ("device");
 	    okButton = new JButton ("Save Preferences");
+	    initOrStopButton = new JButton ("Start Server");
 	    
 	    frame.setPreferredSize (new Dimension (500, 327));
 	    frame.setLayout (null);
 	    frame.add (okButton);
+	    frame.add (initOrStopButton);
 	    frame.add (serverStatusLabel);
+	    frame.add (initOrStopLabel);
 	    frame.add (portLabel);
 	    frame.add (portTxtField);
 	    frame.add (displayLabel);
@@ -54,8 +60,9 @@ public class GuiManager implements Runnable{
 	    frame.add (deviceLabelResult);
 	    
 	    // In order as appears in form
+	    initOrStopLabel.setBounds(80, 15, 90, 25);    initOrStopButton.setBounds(248, 18, 120, 25);
 	    serverStatusLabel.setBounds (80, 60, 90, 25); statusLabelResult.setBounds (253, 60, 100, 25);
-	    portLabel.setBounds (80, 100, 95, 30);         portTxtField.setBounds (250, 105, 187, 25);
+	    portLabel.setBounds (80, 100, 95, 30);        portTxtField.setBounds (250, 105, 187, 25);
 	    displayLabel.setBounds (80, 150, 130, 25);    typeMessageSelector.setBounds (250, 150, 190, 25);
 	    deviceLabel.setBounds (80, 195, 120, 25);     deviceLabelResult.setBounds (255, 195, 120, 25);
 
