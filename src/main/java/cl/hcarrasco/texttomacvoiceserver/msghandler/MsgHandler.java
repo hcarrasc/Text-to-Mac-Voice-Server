@@ -65,7 +65,12 @@ public class MsgHandler {
 						GuiManager.deviceLabelResult.setText(clientConnected);
 						String title = "Message from "+sender;
 						String subtitle = "";
-						String[] cmd = {"osascript", "-e", "display notification \""+strCommand.trim()+"\" with title \""+title.trim()+"\" subtitle \""+subtitle.trim()+"\" sound name \"Glass\""};
+						String[] cmd = {"osascript", "-e", "display notification \""+strCommand.trim()+"\" with title \""+title.trim()+"\" sound name \"Glass\""};
+						try {
+							Thread.sleep(1500);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 						Runtime.getRuntime().exec(cmd);
 					}
 				}
