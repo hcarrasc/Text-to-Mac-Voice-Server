@@ -17,11 +17,13 @@ import cl.hcarrasco.texttomacvoiceserver.msghandler.MsgHandler;
  * Esta clase sera el manejador de los eventos que ocurran en el servidor
  */
 public class ServerHandler extends ChannelInboundHandlerAdapter {
+	
+	final static Logger logger = Logger.getGlobal();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         
-    	boolean isFromAndroidApp = false;
+    		boolean isFromHCProtocol = false;
         int maxBufferMessage = 250;
         ByteBuf in = (ByteBuf) msg;
         byte[] data = new byte[maxBufferMessage];
@@ -37,17 +39,15 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         finally { ReferenceCountUtil.release(msg); }
         String msgFromDevice = new String (data);
         msgFromDevice = msgFromDevice.trim();
-        System.out.println("desde cliente TCP: " + msgFromDevice);
         
         MsgHandler msgHandler = new MsgHandler();
-        isFromAndroidApp = msgHandler.msgFilter(msgFromDevice);
+        isFromHCProtocol = msgHandler.msgFilter(msgFromDevice);
         
-        if (isFromAndroidApp){
+        if (isFromHCProtocol){
         	msgHandler.processMsg(msgFromDevice);
-        	ChannelFuture ft = ctx.channel().writeAndFlush(Unpooled.copiedBuffer(">hc;OK<", CharsetUtil.UTF_8));
-        	System.out.println(ft.cause());
+        ctx.channel().writeAndFlush(Unpooled.copiedBuffer(">hc;OK<", CharsetUtil.UTF_8));
         } else {
-        	System.out.println("Error.");
+        		System.out.println("Error.");
         }
     }
 

@@ -4,15 +4,19 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import cl.hcarrasco.texttomacvoiceserver.gui.GuiManager;
 
 public class MsgHandler {
 	
 	public static String messageShowing = "voice";
 	public static String clientConnected = "Nobody connected";
+	final static Logger logger = Logger.getLogger(MsgHandler.class);
 	
 	public boolean msgFilter(String msgFromDevice){
 		
+		logger.info("desde cliente TCP: " + msgFromDevice);
 		String strValidator;
 		msgFromDevice = msgFromDevice.replaceAll(">", "");
 		strValidator  = msgFromDevice.split(";")[0];
@@ -25,7 +29,7 @@ public class MsgHandler {
 	}
 	
 	/**
-	 * Handle message with protocol: >hc;msg=caca;sender=Héctor Carrasco<
+	 * Handle message with protocol: >hc;msg=hello;sender=Héctor Carrasco<
 	 * @param msgFromDevice
 	 */
 	public void processMsg(String msgFromDevice){
@@ -47,15 +51,16 @@ public class MsgHandler {
 		typeCommand   = command[0];
 		
 		try{
-			if("msg".equals(typeCommand)){
+			switch(typeCommand) {
+
+			case "msg":
 				if(messageShowing.equals("voice")){
 					strCommand    = command[1];
 					if (strCommand!=null){
 						clientConnected = sender;
 						GuiManager.deviceLabelResult.setText("");
 						GuiManager.deviceLabelResult.setText(clientConnected);
-						String[] cmd = {"osascript", "-e","say \""+strCommand.trim()+"\" "}; //using \"victoria\"
-						Runtime.getRuntime().exec(cmd);
+						Runtime.getRuntime().exec(new String[] {"osascript", "-e","say \""+strCommand.trim()+"\" "});
 					}
 				} else if (messageShowing.equals("text-notification")) {
 					strCommand    = command[1];
@@ -64,49 +69,68 @@ public class MsgHandler {
 						GuiManager.deviceLabelResult.setText("");
 						GuiManager.deviceLabelResult.setText(clientConnected);
 						String title = "Message from "+sender;
-						String subtitle = "";
-						String[] cmd = {"osascript", "-e", "display notification \""+strCommand.trim()+"\" with title \""+title.trim()+"\" sound name \"Glass\""};
 						try {
 							Thread.sleep(1500);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-						Runtime.getRuntime().exec(cmd);
+						Runtime.getRuntime().exec(new String[] {"osascript", "-e", "display notification \""+strCommand.trim()+"\" with title \""+title.trim()+"\" sound name \"Glass\""});
 					}
 				}
-			}
-			if("volUp".equals(typeCommand)){
-				String[] cmd = {"osascript", "-e","set volume "};
-				Runtime.getRuntime().exec(cmd);
-			}
-			if("volDown".equals(typeCommand)){
-				String[] cmd = {"osascript", "-e","set volume "};
-	            Runtime.getRuntime().exec(cmd);
-			}
-			if("itunsPlay".equals(typeCommand)){
-				String[] cmd = {"osascript", "-e","tell app \"iTunes\" to play"};
-	            Runtime.getRuntime().exec(cmd);
-			}
-			if("itunsNext".equals(typeCommand)){
-				String[] cmd = {"osascript", "-e","tell app \"iTunes\" to play next track"};
-	            Runtime.getRuntime().exec(cmd);
-			}
-			if("itunsBack".equals(typeCommand)){
-				String[] cmd = {"osascript", "-e","tell app \"iTunes\" to play previous track"};
-	            Runtime.getRuntime().exec(cmd);
-			}
-			if("itunsStop".equals(typeCommand)){
-				String[] cmd = {"osascript", "-e","tell app \"iTunes\" to pause"};
-	            Runtime.getRuntime().exec(cmd);
-			}
-			if("mmov".equals(typeCommand.trim())){
+				break;
+			case "volUp" :
+				Runtime.getRuntime().exec(new String[] {"osascript", "-e","set volume "});
+				break;
+			case "volDown" :
+				Runtime.getRuntime().exec(new String[] {"osascript", "-e","set volume "});
+				break;
+			case "itunsPlay":
+				Runtime.getRuntime().exec(new String[] {"osascript", "-e","tell app \"iTunes\" to play"});
+				clientConnected = sender;
+				GuiManager.deviceLabelResult.setText("");
+				GuiManager.deviceLabelResult.setText(clientConnected);
+				break;
+			case "itunsNext" :
+				Runtime.getRuntime().exec(new String[] {"osascript", "-e","tell app \"iTunes\" to play next track"});
+				clientConnected = sender;
+				GuiManager.deviceLabelResult.setText("");
+				GuiManager.deviceLabelResult.setText(clientConnected);
+				break;
+			case "itunsBack" :
+				Runtime.getRuntime().exec(new String[] {"osascript", "-e","tell app \"iTunes\" to play previous track"});
+				clientConnected = sender;
+				GuiManager.deviceLabelResult.setText("");
+				GuiManager.deviceLabelResult.setText(clientConnected);
+				break;
+			case "itunsStop" :
+				Runtime.getRuntime().exec(new String[] {"osascript", "-e","tell app \"iTunes\" to pause"});
+				clientConnected = sender;
+				GuiManager.deviceLabelResult.setText("");
+				GuiManager.deviceLabelResult.setText(clientConnected);
+				break;
+			case "mute" :
+				Runtime.getRuntime().exec(new String[] {"osascript", "-e","set volume output muted true"});
+				clientConnected = sender;
+				GuiManager.deviceLabelResult.setText("");
+				GuiManager.deviceLabelResult.setText(clientConnected);
+				break;
+			case "mmov" :
 				String[] coordinates = command[1].split(",");
 				int xCoord = Integer.parseInt(coordinates[0].trim());
-		    		int yCoord = Integer.parseInt(coordinates[1].trim());
-		    		Robot robot = new Robot();
-		    		robot.mouseMove(xCoord, yCoord);
+				int yCoord = Integer.parseInt(coordinates[1].trim());
+				Robot robot = new Robot();
+				robot.mouseMove(xCoord, yCoord);
+				break;
+			case "dmsg" :
+				Runtime.getRuntime().exec(new String[] {"osascript", "-e", "display notification \""+strCommand.trim()+"\" sound name \"Glass\""});
+				clientConnected = sender;
+				GuiManager.deviceLabelResult.setText("");
+				GuiManager.deviceLabelResult.setText(clientConnected);
+				break;
+			default :
+				logger.info("Invalid option");
 			}
-		
+
 		} catch (IOException | AWTException | NumberFormatException e) {
 			e.printStackTrace();
 		}

@@ -6,9 +6,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import javax.swing.JButton;
@@ -17,12 +15,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+
 import cl.hcarrasco.texttomacvoiceserver.msghandler.MsgHandler;
 import cl.hcarrasco.texttomacvoiceserver.server.ServerSetup;
 
 public class GuiManager implements Runnable{
 	
 	ServerSetup server;
+	final static Logger logger = Logger.getLogger(GuiManager.class);
 	
     JFrame frame = new JFrame("Text -> Mac Voice Server");
 	JPanel panel = new JPanel();
@@ -41,28 +42,11 @@ public class GuiManager implements Runnable{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void createComponents() {
 		
-//		try(final DatagramSocket socket = new DatagramSocket()){
-//			  socket.connect(InetAddress.getByName("8.8.8.8"), 1234);
-//			  ip = socket.getLocalAddress().getHostAddress();
-//		} catch (SocketException | UnknownHostException e1) {
-//			e1.printStackTrace();
-//		}
-		
-		try {
-			InetAddress IP=InetAddress.getLocalHost();
-			System.out.println("IP of my system is := "+IP.getHostAddress());
-			ip=""+IP.getHostAddress();
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
 	    String[] jcomp6Items = {"System Voice", "System Notification"};
 	    serverStatusLabel = new JLabel ("Server Status:");
 	    initOrStopLabel = new JLabel ("Control Server:");
 	    portLabel = new JLabel ("Accepting at port:");
-	    portLabelResult = new JLabel(" "+ip+":1234");
+	    portLabelResult = new JLabel("");
 	    displayLabel = new JLabel ("Display Message as:");
 	    typeMessageSelector = new JComboBox (jcomp6Items);
 	    statusLabelResult = new JLabel ("");
@@ -105,6 +89,9 @@ public class GuiManager implements Runnable{
 					statusLabelResult.setForeground(Color.red);
 					statusLabelResult.setText("STOPPED");
 					typeMessageSelector.setEnabled(false);
+					portLabelResult.setText("");
+					deviceLabelResult.setText("");
+					
 				}else {
 					server = new ServerSetup();
 					initOrStopButton.setText("Stop Server");
@@ -117,7 +104,17 @@ public class GuiManager implements Runnable{
 					statusLabelResult.setForeground(Color.green);
 					statusLabelResult.setText("RUNNING");
 					typeMessageSelector.setEnabled(true);
-					deviceLabelResult.setText("");
+					deviceLabelResult.setText(MsgHandler.clientConnected);
+					try {
+						InetAddress IP=InetAddress.getLocalHost();
+						logger.info("IP of my system is := "+IP.getHostAddress());
+						ip=""+IP.getHostAddress();
+					} catch (UnknownHostException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					portLabelResult.setText(""+ip+":1237");
 				}
 			}
 	    });
@@ -125,10 +122,10 @@ public class GuiManager implements Runnable{
     	    public void actionPerformed(ActionEvent e) {
     	    	if (typeMessageSelector.getSelectedIndex()==0){
 					MsgHandler.messageShowing = "voice";
-					System.out.println(MsgHandler.messageShowing);
+					logger.info(MsgHandler.messageShowing);
 				} else if (typeMessageSelector.getSelectedIndex()==1) {
 					MsgHandler.messageShowing = "text-notification";
-					System.out.println(MsgHandler.messageShowing);
+					logger.info(MsgHandler.messageShowing);
 				}
     	    }
     	});

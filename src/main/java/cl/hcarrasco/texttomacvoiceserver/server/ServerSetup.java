@@ -1,5 +1,7 @@
 package cl.hcarrasco.texttomacvoiceserver.server;
 
+import org.apache.log4j.Logger;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -18,12 +20,13 @@ public class ServerSetup implements Runnable{
     EventLoopGroup workerGroup = new NioEventLoopGroup();
     ChannelFuture f; 
     private String ServerStatusFlag = "off";
-    private int    port = 1234;
+    private int    port = 1237;
+    final static Logger logger = Logger.getLogger(ServerSetup.class);
     
     @Override
 	public void run() {
 		try {
-			System.out.println("Starting server at "+port);
+			logger.info("Starting server at "+port);
             ServerBootstrap b = new ServerBootstrap(); 
             b.group(bossGroup, workerGroup)
              .channel(NioServerSocketChannel.class) 
@@ -55,7 +58,7 @@ public class ServerSetup implements Runnable{
 	public void killServer(){
 		workerGroup.shutdownGracefully();
         bossGroup.shutdownGracefully();
-        System.out.println("Server killed.-");
+        logger.info("Server killed.-");
 	}
 
 	public String getServerStatusFlag() {
