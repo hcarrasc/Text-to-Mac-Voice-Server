@@ -6,6 +6,10 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,16 +35,34 @@ public class GuiManager implements Runnable{
 	private JComboBox<?> typeMessageSelector;
 	private JLabel statusLabelResult;
 	private JLabel deviceLabel;
+	private String ip;
 	public static JLabel deviceLabelResult;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void createComponents() {
 		
+//		try(final DatagramSocket socket = new DatagramSocket()){
+//			  socket.connect(InetAddress.getByName("8.8.8.8"), 1234);
+//			  ip = socket.getLocalAddress().getHostAddress();
+//		} catch (SocketException | UnknownHostException e1) {
+//			e1.printStackTrace();
+//		}
+		
+		try {
+			InetAddress IP=InetAddress.getLocalHost();
+			System.out.println("IP of my system is := "+IP.getHostAddress());
+			ip=""+IP.getHostAddress();
+		} catch (UnknownHostException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 	    String[] jcomp6Items = {"System Voice", "System Notification"};
 	    serverStatusLabel = new JLabel ("Server Status:");
 	    initOrStopLabel = new JLabel ("Control Server:");
 	    portLabel = new JLabel ("Accepting at port:");
-	    portLabelResult = new JLabel(" 1234");
+	    portLabelResult = new JLabel(" "+ip+":1234");
 	    displayLabel = new JLabel ("Display Message as:");
 	    typeMessageSelector = new JComboBox (jcomp6Items);
 	    statusLabelResult = new JLabel ("");

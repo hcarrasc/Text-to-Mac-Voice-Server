@@ -102,9 +102,9 @@ public class MsgHandler {
 			if("mmov".equals(typeCommand.trim())){
 				String[] coordinates = command[1].split(",");
 				int xCoord = Integer.parseInt(coordinates[0].trim());
-		    	int yCoord = Integer.parseInt(coordinates[1].trim());
-		    	Robot robot = new Robot();
-		    	robot.mouseMove(xCoord, yCoord);
+		    		int yCoord = Integer.parseInt(coordinates[1].trim());
+		    		Robot robot = new Robot();
+		    		robot.mouseMove(xCoord, yCoord);
 			}
 		
 		} catch (IOException | AWTException | NumberFormatException e) {
